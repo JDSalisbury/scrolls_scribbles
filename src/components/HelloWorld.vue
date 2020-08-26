@@ -10,7 +10,7 @@
         </v-tab>
       </div>
 
-      <v-tab-item v-for="item in desc" :key="item.id">
+      <v-tab-item v-for="item in groupList" :key="item.id">
         <v-card>
           <v-icon @click="addItem(item)" dark>mdi-plus</v-icon>
           <v-form ref="form" v-if="item.adding">
@@ -45,12 +45,15 @@
           <v-card-text>
             <div v-for="(listItem, index) in item.list" :key="index">
               <div class="content" v-show="!listItem.editing">
-                Name: {{ listItem.name }}
+                Name: {{ listItem.name }} {{ listItem.created_at }}
                 <p>Location: {{ listItem.location }}</p>
                 Info: {{ listItem.info }}
                 <div class="extra content">
                   <span @click="showForm(listItem)">
                     <v-icon dark>mdi-pencil</v-icon>
+                  </span>
+                  <span @click="deleteItem(listItem, item)">
+                    <v-icon dark>mdi-delete</v-icon>
                   </span>
                 </div>
               </div>
@@ -109,7 +112,7 @@ export default {
       { id: 2, name: 'Locations' },
       { id: 3, name: 'Loot' }
     ],
-    desc: [
+    groupList: [
       {
         adding: false,
         group: 'Contacts',
@@ -134,16 +137,28 @@ export default {
     hideForm(item) {
       item.editing = false;
     },
-    addItem(desc) {
-      desc.adding = true;
+    deleteItem(item, groupList_item) {
+      let newList = groupList_item.list.filter(
+        (li) => li.created_at != item.created_at
+      );
+
+      this.groupList.map((groupList) => {
+        if (groupList.group == groupList_item.group) {
+          groupList.list = newList;
+        }
+      });
     },
-    addToList(desc) {
+    addItem(groupList) {
+      groupList.adding = true;
+    },
+    addToList(groupList) {
       let item_clone = Object.assign({}, this.itemToAdd);
-      desc.list.push(item_clone);
-      this.finsishAdding(desc);
+      item_clone.created_at = Date();
+      groupList.list.push(item_clone);
+      this.finsishAdding(groupList);
     },
-    finsishAdding(desc) {
-      desc.adding = false;
+    finsishAdding(groupList) {
+      groupList.adding = false;
       this.itemToAdd.name = '';
       this.itemToAdd.location = '';
       this.itemToAdd.info = '';
