@@ -11,7 +11,37 @@
       </div>
 
       <v-tab-item v-for="item in desc" :key="item.id">
-        <v-card flat>
+        <v-card>
+          <v-icon @click="addItem(item)" dark>mdi-plus</v-icon>
+          <v-form ref="form" v-if="item.adding">
+            <v-layout row>
+              <v-flex xs8>
+                <v-text-field
+                  v-model="itemToAdd.name"
+                  label="Name"
+                  required
+                ></v-text-field>
+              </v-flex>
+              <v-flex xs8>
+                <v-text-field
+                  v-model="itemToAdd.location"
+                  label="Note"
+                  required
+                ></v-text-field>
+              </v-flex>
+              <v-flex xs8>
+                <v-text-field
+                  v-model="itemToAdd.info"
+                  label="Quantity"
+                  required
+                ></v-text-field>
+              </v-flex>
+            </v-layout>
+
+            <v-btn class="mr-4" @click="addToList(item)">Submit</v-btn>
+            <v-btn class="mr-4" @click="finsishAdding(item)">Close</v-btn>
+          </v-form>
+
           <v-card-text>
             <div v-for="(listItem, index) in item.list" :key="index">
               <div class="content" v-show="!listItem.editing">
@@ -19,7 +49,7 @@
                 <p>Location: {{ listItem.location }}</p>
                 Info: {{ listItem.info }}
                 <div class="extra content">
-                  <span v-on:click="showForm(listItem)">
+                  <span @click="showForm(listItem)">
                     <v-icon dark>mdi-pencil</v-icon>
                   </span>
                 </div>
@@ -45,7 +75,7 @@
                   <div class="ui two button attached buttons">
                     <button
                       class="ui basic blue button"
-                      v-on:click="hideForm(listItem)"
+                      @click="hideForm(listItem)"
                     >
                       Close X
                     </button>
@@ -66,7 +96,14 @@ export default {
   name: 'Menu',
 
   data: () => ({
-    isEditing: false,
+    adding: false,
+    itemToAdd: {
+      name: '',
+      info: '',
+      location: '',
+      adding: false,
+      editing: false
+    },
     tags: [
       { id: 1, name: 'Contacts' },
       { id: 2, name: 'Locations' },
@@ -74,91 +111,19 @@ export default {
     ],
     desc: [
       {
+        adding: false,
         group: 'Contacts',
-        list: [
-          {
-            name: 'Jeff',
-            editing: false,
-            location: 'Earth',
-            info: 'Does Programming'
-          },
-          {
-            name: 'Jeff',
-            editing: false,
-            location: 'Earth',
-            info: 'Does Programming'
-          },
-          {
-            name: 'Jeff',
-            editing: false,
-            location: 'Earth',
-            info: 'Does Programming'
-          },
-          {
-            name: 'Jeff',
-            editing: false,
-            location: 'Earth',
-            info: 'Does Programming'
-          }
-        ]
+        list: []
       },
       {
+        adding: false,
         group: 'Locations',
-        list: [
-          {
-            name: 'Jeff',
-            editing: false,
-            location: 'Earth',
-            info: 'Does Programming'
-          },
-          {
-            name: 'Jeff',
-            editing: false,
-            location: 'Earth',
-            info: 'Does Programming'
-          },
-          {
-            name: 'Jeff',
-            editing: false,
-            location: 'Earth',
-            info: 'Does Programming'
-          },
-          {
-            name: 'Jeff',
-            editing: false,
-            location: 'Earth',
-            info: 'Does Programming'
-          }
-        ]
+        list: []
       },
       {
+        adding: false,
         group: 'Loot',
-        list: [
-          {
-            name: 'Knife',
-            editing: false,
-            location: 'Earth',
-            info: 'Does cutting'
-          },
-          {
-            name: 'Gold idol',
-            editing: false,
-            location: 'Earth',
-            info: 'Does Blinging'
-          },
-          {
-            name: 'Posin ivy',
-            editing: false,
-            location: 'Earth',
-            info: 'Does itching'
-          },
-          {
-            name: '30 zeni',
-            editing: false,
-            location: 'Earth',
-            info: 'Does buying'
-          }
-        ]
+        list: []
       }
     ]
   }),
@@ -168,6 +133,20 @@ export default {
     },
     hideForm(item) {
       item.editing = false;
+    },
+    addItem(desc) {
+      desc.adding = true;
+    },
+    addToList(desc) {
+      let item_clone = Object.assign({}, this.itemToAdd);
+      desc.list.push(item_clone);
+      this.finsishAdding(desc);
+    },
+    finsishAdding(desc) {
+      desc.adding = false;
+      this.itemToAdd.name = '';
+      this.itemToAdd.location = '';
+      this.itemToAdd.info = '';
     }
   }
 };
