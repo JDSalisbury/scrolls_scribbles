@@ -14,9 +14,44 @@
         <v-card flat>
           <v-card-text>
             <div v-for="(listItem, index) in item.list" :key="index">
-              Name: {{ listItem.name }}
-              <p>Location: {{ listItem.location }}</p>
-              <p>Info: {{ listItem.info }}</p>
+              <div class="content" v-show="!listItem.editing">
+                Name: {{ listItem.name }}
+                <p>Location: {{ listItem.location }}</p>
+                Info: {{ listItem.info }}
+                <div class="extra content">
+                  <span v-on:click="showForm(listItem)">
+                    <v-icon dark>mdi-pencil</v-icon>
+                  </span>
+                </div>
+              </div>
+
+              <div class="content" v-show="listItem.editing">
+                <div class="ui form">
+                  <div class="field">
+                    <label>Name: </label>
+                    <input type="text" v-model="listItem.name" />
+                  </div>
+                  <div class="field">
+                    <label>Location: </label>
+                    <input type="text" v-model="listItem.location" />
+                  </div>
+                  <br />
+                  <div class="field">
+                    <label>Info: </label>
+                    <input type="text" v-model="listItem.info" />
+                  </div>
+                  <br />
+
+                  <div class="ui two button attached buttons">
+                    <button
+                      class="ui basic blue button"
+                      v-on:click="hideForm(listItem)"
+                    >
+                      Close X
+                    </button>
+                  </div>
+                </div>
+              </div>
               <hr />
             </div>
           </v-card-text>
@@ -31,6 +66,7 @@ export default {
   name: 'Menu',
 
   data: () => ({
+    isEditing: false,
     tags: [
       { id: 1, name: 'Contacts' },
       { id: 2, name: 'Locations' },
@@ -40,24 +76,107 @@ export default {
       {
         group: 'Contacts',
         list: [
-          { name: 'Jeff', location: 'Earth', info: 'Does Programming' },
-          { name: 'Jeff', location: 'Earth', info: 'Does Programming' },
-          { name: 'Jeff', location: 'Earth', info: 'Does Programming' },
-          { name: 'Jeff', location: 'Earth', info: 'Does Programming' }
+          {
+            name: 'Jeff',
+            editing: false,
+            location: 'Earth',
+            info: 'Does Programming'
+          },
+          {
+            name: 'Jeff',
+            editing: false,
+            location: 'Earth',
+            info: 'Does Programming'
+          },
+          {
+            name: 'Jeff',
+            editing: false,
+            location: 'Earth',
+            info: 'Does Programming'
+          },
+          {
+            name: 'Jeff',
+            editing: false,
+            location: 'Earth',
+            info: 'Does Programming'
+          }
         ]
       },
-      { group: 'Locations', list: 'Something Something Darkside' },
+      {
+        group: 'Locations',
+        list: [
+          {
+            name: 'Jeff',
+            editing: false,
+            location: 'Earth',
+            info: 'Does Programming'
+          },
+          {
+            name: 'Jeff',
+            editing: false,
+            location: 'Earth',
+            info: 'Does Programming'
+          },
+          {
+            name: 'Jeff',
+            editing: false,
+            location: 'Earth',
+            info: 'Does Programming'
+          },
+          {
+            name: 'Jeff',
+            editing: false,
+            location: 'Earth',
+            info: 'Does Programming'
+          }
+        ]
+      },
       {
         group: 'Loot',
-        list:
-          'Cras sagittis. Phasellus nec sem in justo pellentesque facilisis.  Proin sapien ipsum, porta a, auctor quis, euismod ut, mi. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nam at tortor in tellus interdum sagittis.'
+        list: [
+          {
+            name: 'Knife',
+            editing: false,
+            location: 'Earth',
+            info: 'Does cutting'
+          },
+          {
+            name: 'Gold idol',
+            editing: false,
+            location: 'Earth',
+            info: 'Does Blinging'
+          },
+          {
+            name: 'Posin ivy',
+            editing: false,
+            location: 'Earth',
+            info: 'Does itching'
+          },
+          {
+            name: '30 zeni',
+            editing: false,
+            location: 'Earth',
+            info: 'Does buying'
+          }
+        ]
       }
     ]
-  })
+  }),
+  methods: {
+    showForm(item) {
+      item.editing = true;
+    },
+    hideForm(item) {
+      item.editing = false;
+    }
+  }
 };
 </script>
 <style scoped>
 .menu {
   padding: 30px;
+}
+input {
+  color: white;
 }
 </style>
