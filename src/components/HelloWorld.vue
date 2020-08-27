@@ -2,6 +2,12 @@
   <v-card class="menu">
     <v-toolbar flat color="primary" dark>
       <!-- <v-toolbar-title>User Profile</v-toolbar-title> -->
+      <v-btn class="mr-4" @click="saveNotes">Save</v-btn>
+      <v-file-input
+        show-size
+        label="File input"
+        @change="selectFile"
+      ></v-file-input>
     </v-toolbar>
     <v-tabs vertical>
       <div v-for="item in tags" :key="item.id">
@@ -162,6 +168,36 @@ export default {
       this.itemToAdd.name = '';
       this.itemToAdd.location = '';
       this.itemToAdd.info = '';
+    },
+    saveNotes() {
+      var FileSaver = require('file-saver');
+
+      var json = JSON.stringify(this.$data);
+      var blob = new Blob([json], {
+        type: 'text/plain;charset=utf-8'
+      });
+      FileSaver.saveAs(blob, 'scrolls_and_scribbles.txt');
+    },
+    selectFile(file) {
+      function parseFile(file) {
+        return new Promise((resolve, reject) => {
+          let content;
+          const reader = new FileReader();
+
+          reader.onloadend = function(e) {
+            content = JSON.parse(e.target.result);
+            resolve(content);
+          };
+          reader.onerror = function(e) {
+            reject(e);
+          };
+          reader.readAsText(file);
+        });
+      }
+      parseFile(file).then(
+        (result) => (this.groupList = result.groupList),
+        (error) => alert(error)
+      );
     }
   }
 };

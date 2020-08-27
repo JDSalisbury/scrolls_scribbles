@@ -9,7 +9,10 @@
     "dev": "vue-cli-service serve --port $PORT"
   },
   "dependencies": {
+    "browserify-fs": "^1.0.0",
     "core-js": "^2.6.5",
+    "file-saver": "^2.0.2",
+    "fs": "0.0.1-security",
     "vue": "^2.6.10",
     "vuetify": "^2.2.11"
   },
