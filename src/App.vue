@@ -3,14 +3,12 @@
     <v-app-bar app color="primary" dark>
       <div class="d-flex align-center">
         <v-img
-          alt="Vuetify Logo"
+          alt="S&S word logo"
           class="shrink mr-2"
           contain
-          src="./assets/quill.png"
+          src="./assets/s&s.png"
           transition="scale-transition"
-          width="55"
         />
-        <h1>Scrolls & Scribbles</h1>
       </div>
 
       <v-spacer></v-spacer>
