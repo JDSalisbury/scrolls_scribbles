@@ -17,19 +17,19 @@
     </v-app-bar>
 
     <v-main>
-      <HelloWorld />
+      <TagGroup />
     </v-main>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import TagGroup from './components/TagGroup';
 
 export default {
   name: 'App',
 
   components: {
-    HelloWorld
+    TagGroup
   },
 
   data: () => ({

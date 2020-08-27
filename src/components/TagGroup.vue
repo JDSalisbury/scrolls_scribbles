@@ -1,26 +1,24 @@
 <template>
-  <v-card class="menu">
+  <div class="menu">
     <v-toolbar flat color="primary" dark>
-      <!-- <v-toolbar-title>User Profile</v-toolbar-title> -->
-      <v-btn class="mr-4" @click="saveNotes">Save</v-btn>
       <v-file-input
+        class="mr-12 file-input"
         show-size
         label="File input"
         @change="selectFile"
       ></v-file-input>
+      <v-btn class="mr-4" @click="saveNotes">Save</v-btn>
     </v-toolbar>
-    <v-tabs vertical>
-      <div v-for="item in tags" :key="item.id">
-        <v-tab>
-          {{ item.name }}
-        </v-tab>
-      </div>
+    <v-tabs grow background-color="primary" center-active>
+      <v-tab v-for="item in tags" :key="item.id" ripple>
+        {{ item.name }}
+      </v-tab>
 
       <v-tab-item v-for="item in groupList" :key="item.id">
-        <v-card>
+        <div class="form mr-8">
           <v-icon @click="addItem(item)" dark>mdi-plus</v-icon>
           <v-form ref="form" v-if="item.adding">
-            <v-layout row>
+            <v-layout class="form-inputs" row>
               <v-flex xs8>
                 <v-text-field
                   v-model="itemToAdd.name"
@@ -31,14 +29,14 @@
               <v-flex xs8>
                 <v-text-field
                   v-model="itemToAdd.location"
-                  label="Note"
+                  label="Location"
                   required
                 ></v-text-field>
               </v-flex>
               <v-flex xs8>
                 <v-text-field
                   v-model="itemToAdd.info"
-                  label="Quantity"
+                  label="Info"
                   required
                 ></v-text-field>
               </v-flex>
@@ -47,57 +45,58 @@
             <v-btn class="mr-4" @click="addToList(item)">Submit</v-btn>
             <v-btn class="mr-4" @click="finsishAdding(item)">Close</v-btn>
           </v-form>
+        </div>
 
-          <v-card-text>
-            <div v-for="(listItem, index) in item.list" :key="index">
-              <div class="content" v-show="!listItem.editing">
-                Name: {{ listItem.name }} {{ listItem.created_at }}
-                <p>Location: {{ listItem.location }}</p>
-                Info: {{ listItem.info }}
-                <div class="extra content">
-                  <span @click="showForm(listItem)">
-                    <v-icon dark>mdi-pencil</v-icon>
-                  </span>
-                  <span @click="deleteItem(listItem, item)">
-                    <v-icon dark>mdi-delete</v-icon>
-                  </span>
+        <div
+          class="list-item"
+          v-for="(listItem, index) in item.list"
+          :key="index"
+        >
+          <v-card class="mx-auto" v-show="!listItem.editing">
+            <v-card-text>
+              <div>Location: {{ listItem.location }}</div>
+              <p class="display-1 text--primary">
+                {{ listItem.name }}
+              </p>
+              <p>{{ listItem.created_at }}</p>
+              <div class="text--primary">Info: {{ listItem.info }}</div>
+            </v-card-text>
+            <v-card-actions>
+              <span @click="showForm(listItem)">
+                <v-icon dark>mdi-pencil</v-icon>
+              </span>
+              <span @click="deleteItem(listItem, item)">
+                <v-icon dark>mdi-delete</v-icon>
+              </span>
+            </v-card-actions>
+          </v-card>
+
+          <v-card class="mx-auto" v-show="listItem.editing">
+            <v-card-text>
+              <div class="field">
+                <label>Location: </label>
+                <input type="text" v-model="listItem.location" />
+              </div>
+              <div class="display-1 text--primary field">
+                <label>Name: </label>
+                <input type="text" v-model="listItem.name" />
+              </div>
+              <p>{{ listItem.created_at }}</p>
+              <div class="text--primary">
+                <div class="field">
+                  <label>Info: </label>
+                  <input type="text" v-model="listItem.info" />
                 </div>
               </div>
-
-              <div class="content" v-show="listItem.editing">
-                <div class="ui form">
-                  <div class="field">
-                    <label>Name: </label>
-                    <input type="text" v-model="listItem.name" />
-                  </div>
-                  <div class="field">
-                    <label>Location: </label>
-                    <input type="text" v-model="listItem.location" />
-                  </div>
-                  <br />
-                  <div class="field">
-                    <label>Info: </label>
-                    <input type="text" v-model="listItem.info" />
-                  </div>
-                  <br />
-
-                  <div class="ui two button attached buttons">
-                    <button
-                      class="ui basic blue button"
-                      @click="hideForm(listItem)"
-                    >
-                      Close X
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <hr />
-            </div>
-          </v-card-text>
-        </v-card>
+            </v-card-text>
+            <v-card-actions>
+              <v-btn class="mr-4" @click="hideForm(listItem)">Done</v-btn>
+            </v-card-actions>
+          </v-card>
+        </div>
       </v-tab-item>
     </v-tabs>
-  </v-card>
+  </div>
 </template>
 
 <script>
@@ -206,7 +205,21 @@ export default {
 .menu {
   padding: 30px;
 }
+
+.form-inputs {
+  margin-left: 3px;
+}
+
 input {
   color: white;
+}
+.form {
+  margin-left: 16px;
+}
+.file-input {
+  margin-top: 28px !important;
+}
+.list-item {
+  padding: 10px;
 }
 </style>
