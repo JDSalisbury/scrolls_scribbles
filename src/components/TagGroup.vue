@@ -28,22 +28,22 @@
               </v-flex>
               <v-flex xs8>
                 <v-text-field
-                  v-model="itemToAdd.location"
-                  label="Location"
-                  required
-                ></v-text-field>
-              </v-flex>
-              <v-flex xs8>
-                <v-text-field
                   v-model="itemToAdd.info"
                   label="Info"
                   required
                 ></v-text-field>
               </v-flex>
+              <v-flex xs8>
+                <v-textarea
+                  v-model="itemToAdd.details"
+                  label="Details"
+                  required
+                ></v-textarea>
+              </v-flex>
             </v-layout>
 
             <v-btn class="mr-4" @click="addToList(item)">Submit</v-btn>
-            <v-btn class="mr-4" @click="finsishAdding(item)">Close</v-btn>
+            <v-btn class="mr-4" @click="finishAdding(item)">Close</v-btn>
           </v-form>
         </div>
 
@@ -54,12 +54,12 @@
         >
           <v-card class="mx-auto" v-show="!listItem.editing">
             <v-card-text>
-              <div>Location: {{ listItem.location }}</div>
+              <div>{{ listItem.info }}</div>
               <p class="display-1 text--primary">
                 {{ listItem.name }}
               </p>
               <p>{{ listItem.created_at }}</p>
-              <div class="text--primary">Info: {{ listItem.info }}</div>
+              <div class="text--primary">{{ listItem.details }}</div>
             </v-card-text>
             <v-card-actions>
               <span @click="showForm(listItem)">
@@ -74,8 +74,8 @@
           <v-card class="mx-auto" v-show="listItem.editing">
             <v-card-text>
               <div class="field">
-                <label>Location: </label>
-                <input type="text" v-model="listItem.location" />
+                <label>Info: </label>
+                <input type="text" v-model="listItem.info" />
               </div>
               <div class="display-1 text--primary field">
                 <label>Name: </label>
@@ -84,8 +84,14 @@
               <p>{{ listItem.created_at }}</p>
               <div class="text--primary">
                 <div class="field">
-                  <label>Info: </label>
-                  <input type="text" v-model="listItem.info" />
+                  <label>Details: </label>
+                  <textarea
+                    rows="5"
+                    cols="100"
+                    class="text-area"
+                    type="text"
+                    v-model="listItem.details"
+                  />
                 </div>
               </div>
             </v-card-text>
@@ -107,30 +113,36 @@ export default {
     adding: false,
     itemToAdd: {
       name: '',
+      details: '',
       info: '',
-      location: '',
       adding: false,
       editing: false
     },
     tags: [
-      { id: 1, name: 'Contacts' },
-      { id: 2, name: 'Locations' },
-      { id: 3, name: 'Loot' }
+      { id: 1, name: 'Persons' },
+      { id: 2, name: 'Places' },
+      { id: 3, name: 'Things' },
+      { id: 4, name: 'Ideas' }
     ],
     groupList: [
       {
         adding: false,
-        group: 'Contacts',
+        group: 'Persons',
         list: []
       },
       {
         adding: false,
-        group: 'Locations',
+        group: 'Places',
         list: []
       },
       {
         adding: false,
-        group: 'Loot',
+        group: 'Things',
+        list: []
+      },
+      {
+        adding: false,
+        group: 'Ideas',
         list: []
       }
     ]
@@ -159,14 +171,14 @@ export default {
     addToList(groupList) {
       let item_clone = Object.assign({}, this.itemToAdd);
       item_clone.created_at = Date();
-      groupList.list.push(item_clone);
-      this.finsishAdding(groupList);
+      groupList.list.unshift(item_clone);
+      this.finishAdding(groupList);
     },
-    finsishAdding(groupList) {
+    finishAdding(groupList) {
       groupList.adding = false;
       this.itemToAdd.name = '';
-      this.itemToAdd.location = '';
       this.itemToAdd.info = '';
+      this.itemToAdd.details = '';
     },
     saveNotes() {
       var FileSaver = require('file-saver');
@@ -175,7 +187,7 @@ export default {
       var blob = new Blob([json], {
         type: 'text/plain;charset=utf-8'
       });
-      FileSaver.saveAs(blob, 'scrolls_and_scribbles.txt');
+      FileSaver.saveAs(blob, 'S&S_notes.txt');
     },
     selectFile(file) {
       function parseFile(file) {
@@ -211,7 +223,7 @@ export default {
 }
 
 input {
-  color: white;
+  color: #b1b1ff;
 }
 .form {
   margin-left: 16px;
@@ -221,5 +233,8 @@ input {
 }
 .list-item {
   padding: 10px;
+}
+.text-area {
+  color: #b1b1ff;
 }
 </style>

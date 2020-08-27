@@ -27,13 +27,8 @@ import TagGroup from './components/TagGroup';
 
 export default {
   name: 'App',
-
   components: {
     TagGroup
-  },
-
-  data: () => ({
-    //
-  })
+  }
 };
 </script>
