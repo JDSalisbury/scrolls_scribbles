@@ -17,7 +17,7 @@
       <v-tab-item v-for="item in groupList" :key="item.id">
         <div class="form mr-8">
           <v-icon @click="addItem(item)" dark>mdi-plus</v-icon>
-          <v-form ref="form" v-if="item.adding">
+          <v-form row ref="form" v-if="item.adding">
             <v-layout class="form-inputs" row>
               <v-flex xs8>
                 <v-text-field
