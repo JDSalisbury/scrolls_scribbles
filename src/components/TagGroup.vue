@@ -16,7 +16,17 @@
 
       <v-tab-item v-for="item in groupList" :key="item.id">
         <div class="form mr-8">
-          <v-icon @click="addItem(item)" dark>mdi-plus</v-icon>
+          <v-btn
+            class="btn-add"
+            outlined
+            @click="addItem(item)"
+            color="success"
+            fab
+            x-small
+            dark
+          >
+            <v-icon dark>mdi-plus</v-icon>
+          </v-btn>
           <v-form class="form-area" ref="form" v-if="item.adding">
             <v-layout class="form-inputs">
               <v-flex xs8>
@@ -242,5 +252,9 @@ input {
 }
 .detail-area {
   white-space: pre-wrap;
+}
+.btn-add {
+  margin-top: 14px;
+  margin-bottom: 14px;
 }
 </style>

@@ -9,8 +9,6 @@
         transition="scale-transition"
         width="400"
       />
-
-      <v-spacer></v-spacer>
     </v-app-bar>
 
     <v-main>
