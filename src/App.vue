@@ -1,15 +1,14 @@
 <template>
   <v-app>
     <v-app-bar app color="primary" dark>
-      <div class="d-flex align-center">
-        <v-img
-          alt="S&S word logo"
-          class="shrink mr-2"
-          contain
-          src="./assets/s&s.png"
-          transition="scale-transition"
-        />
-      </div>
+      <v-img
+        alt="S&S word logo"
+        class="shrink mr-2"
+        contain
+        src="./assets/s&s.png"
+        transition="scale-transition"
+        width="400"
+      />
 
       <v-spacer></v-spacer>
     </v-app-bar>
