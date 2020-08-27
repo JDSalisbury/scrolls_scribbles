@@ -17,8 +17,8 @@
       <v-tab-item v-for="item in groupList" :key="item.id">
         <div class="form mr-8">
           <v-icon @click="addItem(item)" dark>mdi-plus</v-icon>
-          <v-form row ref="form" v-if="item.adding">
-            <v-layout class="form-inputs" row>
+          <v-form class="form-area" ref="form" v-if="item.adding">
+            <v-layout class="form-inputs">
               <v-flex xs8>
                 <v-text-field
                   v-model="itemToAdd.name"
@@ -220,6 +220,8 @@ export default {
 
 .form-inputs {
   margin-left: 3px;
+  display: flex;
+  flex-direction: column;
 }
 
 input {
