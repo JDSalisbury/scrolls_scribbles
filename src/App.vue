@@ -8,7 +8,7 @@
           contain
           src="./assets/quill.png"
           transition="scale-transition"
-          width="50"
+          width="55"
         />
         <h1>Scrolls & Scribbles</h1>
       </div>
@@ -32,3 +32,8 @@ export default {
   }
 };
 </script>
+<style>
+body {
+  background-color: #131313;
+}
+</style>
