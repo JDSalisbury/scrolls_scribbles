@@ -59,7 +59,7 @@
                 {{ listItem.name }}
               </p>
               <p>{{ listItem.created_at }}</p>
-              <div class="text--primary">{{ listItem.details }}</div>
+              <p class="text--primary detail-area">{{ listItem.details }}</p>
             </v-card-text>
             <v-card-actions>
               <span @click="showForm(listItem)">
@@ -236,5 +236,9 @@ input {
 }
 .text-area {
   color: #b1b1ff;
+  white-space: pre-wrap;
+}
+.detail-area {
+  white-space: pre-wrap;
 }
 </style>
