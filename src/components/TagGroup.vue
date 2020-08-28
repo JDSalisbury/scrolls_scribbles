@@ -8,7 +8,8 @@
         @change="selectFile"
       ></v-file-input>
       <v-btn v-show="groupListCheck()" class="mr-4" @click="saveNotes"
-        >Save</v-btn
+        ><v-icon color="red" v-show="this.save" left>mdi-exclamation</v-icon>
+        Save</v-btn
       >
     </v-toolbar>
     <v-tabs grow background-color="primary" center-active>
@@ -122,6 +123,7 @@ export default {
   name: 'Menu',
 
   data: () => ({
+    save: false,
     adding: false,
     itemToAdd: {
       name: '',
@@ -160,11 +162,15 @@ export default {
     ]
   }),
   methods: {
+    shouldSave() {
+      this.save = true;
+    },
     showForm(item) {
       item.editing = true;
     },
     hideForm(item) {
       item.editing = false;
+      this.shouldSave();
     },
     deleteItem(item, groupList_item) {
       let newList = groupList_item.list.filter(
@@ -176,6 +182,7 @@ export default {
           groupList.list = newList;
         }
       });
+      this.shouldSave();
     },
     addItem(groupList) {
       groupList.adding = true;
@@ -191,6 +198,7 @@ export default {
       this.itemToAdd.name = '';
       this.itemToAdd.info = '';
       this.itemToAdd.details = '';
+      this.shouldSave();
     },
     saveNotes() {
       var FileSaver = require('file-saver');
@@ -200,6 +208,7 @@ export default {
         type: 'text/plain;charset=utf-8'
       });
       FileSaver.saveAs(blob, 'S&S_notes.txt');
+      this.save = false;
     },
     selectFile(file) {
       function parseFile(file) {
