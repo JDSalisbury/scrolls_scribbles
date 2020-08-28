@@ -1,13 +1,15 @@
 <template>
   <div class="menu">
-    <v-toolbar flat color="primary" dark>
+    <v-toolbar transition="scale-transition" flat color="primary" dark>
       <v-file-input
         class="mr-12 file-input"
         show-size
         label="File input"
         @change="selectFile"
       ></v-file-input>
-      <v-btn class="mr-4" @click="saveNotes">Save</v-btn>
+      <v-btn v-show="groupListCheck()" class="mr-4" @click="saveNotes"
+        >Save</v-btn
+      >
     </v-toolbar>
     <v-tabs grow background-color="primary" center-active>
       <v-tab v-for="item in tags" :key="item.id" ripple>
@@ -219,6 +221,15 @@ export default {
         (result) => (this.groupList = result.groupList),
         (error) => alert(error)
       );
+    },
+    groupListCheck() {
+      let show;
+      this.groupList.map((item) => {
+        if (item.list.length >= 1) {
+          show = true;
+        }
+      });
+      return show;
     }
   }
 };
