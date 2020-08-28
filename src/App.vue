@@ -31,4 +31,10 @@ export default {
 body {
   background-color: #131313;
 }
+.v-main__wrap {
+  background-image: url('./assets/quill.png');
+  background-position: right bottom;
+  /* background-size: cover; */
+  background-size: 10%;
+}
 </style>
