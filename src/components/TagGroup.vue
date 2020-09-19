@@ -99,7 +99,7 @@
                 <div class="field">
                   <label>Details: </label>
                   <textarea
-                    rows="5"
+                    :rows="lines"
                     cols="100"
                     class="text-area"
                     type="text"
@@ -123,6 +123,7 @@ export default {
   name: 'Menu',
 
   data: () => ({
+    lines: 5,
     save: false,
     adding: false,
     itemToAdd: {
@@ -167,6 +168,8 @@ export default {
     },
     showForm(item) {
       item.editing = true;
+      let lines = item.details.split('\n');
+      this.lines = lines.length * 5;
     },
     hideForm(item) {
       item.editing = false;
@@ -276,5 +279,8 @@ input {
 .btn-add {
   margin-top: 14px;
   margin-bottom: 14px;
+}
+textarea {
+  width: 99%;
 }
 </style>
