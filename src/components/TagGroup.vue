@@ -168,8 +168,12 @@ export default {
     },
     showForm(item) {
       item.editing = true;
-      let lines = item.details.split('\n');
-      this.lines = lines.length * 5;
+      let detailLines = item.details.split('\n');
+      let total = 0;
+      detailLines.forEach((detailLine) => {
+        total += detailLine.length / 100;
+      });
+      this.lines = Math.floor(total) + 5;
     },
     hideForm(item) {
       item.editing = false;
