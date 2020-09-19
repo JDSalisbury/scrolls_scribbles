@@ -171,17 +171,12 @@ export default {
       let detailLines = item.details.split('\n');
       let total = 0;
       detailLines.forEach((detailLine) => {
-        // eslint-disable-next-line no-console
-        console.log(detailLine.length);
         total += Math.floor(detailLine.length / 100);
         if (detailLine.length === 0) {
           total += 1;
         }
       });
       this.lines = total + 3;
-
-      // eslint-disable-next-line no-console
-      console.log(this.lines);
     },
     hideForm(item) {
       item.editing = false;
