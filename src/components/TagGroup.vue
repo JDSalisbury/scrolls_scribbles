@@ -172,7 +172,7 @@ export default {
       let total = 0;
       detailLines.forEach((detailLine) => {
         total += Math.floor(detailLine.length / 100);
-        if (detailLine.length === 0) {
+        if (detailLine.length < 99) {
           total += 1;
         }
       });
